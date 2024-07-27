@@ -1,0 +1,15 @@
+﻿PAYPAL CREDENTIALS
+
+----------------------------------------------------------------------------
+businesspayments@gmail.com
+22042556Paypal
+
+benopayments@paypal.com
+22042556Paypal
+
+------------------------------------------------------------------------------
+Client ID
+Ae2sJBCK9x0UDfDDDMa7iQCFAjgeXDh0GXxGaxM09OfUa09ogCnyUMlYQ6Xm_jQlTuSAISPkLTf0YfFO
+
+Secret
+EO48znXDlLmOHD8SwM3P7L9xdGOt74lT6BoWqHXyRcyCPXZl5imIa_dvHBhiRuHcckbNukkhs2vtLsIz

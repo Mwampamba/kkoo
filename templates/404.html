@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-intro padding-y-sm">
+    <div class="card mx-auto" style="max-width: 1000px; margin-top:15px;">
+        <div class="container">
+            <center><h5 style="margin-top: 36px;">#404 Oops, we can’t find that page!</h5>
+                <a href="{% url 'home' %}" style="margin-top: 36px;" class="btn btn-lg btn-primary">Go back</a>
+            </center>
+        </div>
+    </div>
+</section>
+
+{% endblock %} 

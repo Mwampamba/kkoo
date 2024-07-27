@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'partials/notification.html' %}
+
+<div class="row">
+    {% include 'vendor/sidebar.html' %}
+    <main class="col-md-9">
+        <article class="card">
+            <header class="card-header">
+                <h3>Product details
+                    <a href="{% url 'products_by_vendor' %}" class="btn btn-danger float-right">BACK</a>
+                </h3>
+            </header>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>Product Name<span class="text-danger"> *</label>
+                                    <input type="text" name="product_name" class="form-control form-control-lg rounded"
+                                        value="{{ product.product_name }}" placeholder="Product Name" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Category<span class="text-danger"> *</label>
+                                    <select name="category" class="form-control form-control-lg rounded selector">
+                                        <option value="">Select Category</option>
+                                        {% for category in categories %} 
+                                        <option value="{{ category.id }}" {% if product.product_category_id == category.id %}selected{% endif %}>{{ category.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Brand<span class="text-danger"> *</label>
+                                    <select name="brand" class="form-control form-control-lg rounded selector">
+                                        <option value="">Select Brand</option>
+                                        {% for brand in brands %}
+                                        <option value="{{ brand.id }}" {% if product.product_brand_id == brand.id %}selected{% endif %}>{{ brand.brand_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>Description<span class="text-danger"> *</label>
+                                    <textarea name="description" class="form-control form-control-lg rounded"
+                                        rows="5">{{ product.product_description }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>Product Image<span class="text-danger"> *</label>
+                                    <input type="file" name="picture" class="form-control form-control-lg rounded"><br>
+                                    <img src="{{product.product_image.url}}" class="img-rounded border elevation-2" style="width:100px;height:100px">
+                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Original Price<span class="text-danger"> *</label>
+                                    <input type="text" name="original_price"
+                                        class="form-control form-control-lg rounded"
+                                        value="{{ product.original_price }}" placeholder="Original Price" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Selling Price<span class="text-danger"> *</label>
+                                    <input type="text" name="selling_price"
+                                        class="form-control form-control-lg rounded" value="{{ product.selling_price }}"
+                                        placeholder="Selling Price" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Stock<span class="text-danger"> *</label>
+                                    <input type="text" name="stock" class="form-control form-control-lg rounded"
+                                        value="{{ product.product_stock }}" placeholder="Stock" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Status<span class="text-danger"> *</label>
+                                    <select name="status" class="form-control form-control-lg rounded">
+                                        <option value="">Select status</option>
+                                        <option value="1" {% if product.status == 1 %}selected{% endif %}>Available</option>
+                                        <option value="0" {% if product.status == 0 %}selected{% endif %}>Not Available</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn btn-primary submit-btn">
+                                    Update Product</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+</div>
+<script src="{% static 'js/registration.js' %}"></script>
+{% endblock %}

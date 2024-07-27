@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-conten padding-y bg">
+
+{% include 'customer/sidebar.html' %}
+      <main class="col-md-9">
+          <article class="card">
+            <header class="card-header"> 
+              <a href="#" onclick="window.print();return false;" class="btn btn-default float-right"><i class="nav-icon fa fa-print"></i>
+                Print</a>
+            </header>
+            <div class="col-lg-6">
+                <div class="invoice-logo"><img src="{% static '/images/logo.png' %}" alt="Invoice logo" style="max-height: 50px;"></div>
+            </div>
+            <div class="col-lg-11">
+                <div class="invoice-from">
+                    <ul class="list-unstyled text-right">
+                        <li><strong>Invoiced to </strong></li>
+                        <li>{{ order.full_name }}</li>
+                        <li>{{ order.full_address }}</li>
+                        <li>{{ order.city }}, {{ order.state }}</li>
+                        <li>{{ order.country }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="invoice-details mt25">
+                    <div class="well">
+                        <ul class="list-unstyled mb0">
+                            <li><strong>Order number: </strong> {{ order.order_number }}</li>
+                            <li><strong>Transaction ID: </strong> {{ order.payment.payment_id }}</li>
+                            <li><strong>Date: </strong> {{ order.payment.created_at }}</li>
+                            <li><strong>Status: </strong> {{ order.payment.status }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="invoice-items">
+                    <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="per70 text-center">Product</th>
+                                    <th class="per5 text-center">Quantity</th>
+                                    <th class="per25 text-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order_detail %}
+                                <tr>
+                                    <td>{{ item.product.product_name }}
+                                        <p class="text-muted small">
+                                            {% if item.variations.all %}
+                                                {% for i in item.variations.all %}
+                                                    {{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }} <br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </p>
+                                    </td>
+                                    <td class="text-center">{{ item.quantity }}</td>
+                                    <td class="text-center">{{ item.product_price }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-right">Sub total:</th>
+                                    <th class="text-center">{{ subtotal }}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-right">VAT:</th>
+                                    <th class="text-center">{{ order.tax }}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-right">Grand total:</th>
+                                    <th class="text-center">{{ order.order_total }}  </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="invoice-footer mt25">
+                    <p class="text-center">Thank you for shopping with us!</p>
+                </div>
+            </div>
+          </article> 
+      </main>
+    </div> 
+  </div>
+</section>
+
+{% endblock %}

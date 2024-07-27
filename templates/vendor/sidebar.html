@@ -1,0 +1,25 @@
+{% load static %}
+
+<link href="{% static 'css/adminlte.min.css' %}" rel="stylesheet" type="text/css" />
+
+<div class="container">
+    <div class="row">
+        <aside class="col-md-3">
+            <ul class="list-group">
+                <a class="list-group-item {% if '/authentication/dashboard/' == request.path %} active {% endif %}"
+                    href="{% url 'vendor_dashboard' %}"><i class="fa fa-credit-card" aria-hidden="true"></i>
+                    Dashboard</a>
+                <a class="list-group-item {% if '/authentication/orders/' == request.path %} active {% endif %}"
+                    href="{% url 'products_by_vendor' %}"><i class="nav-icon fas fa-shopping-cart" aria-hidden="true"></i>
+                    Manage Products</a>
+                <a class="list-group-item {% if '/authentication/orders/' == request.path %} active {% endif %}"
+                    href="{% url 'vendor_orders' %}"><i class="nav-icon fas fa-shopping-cart" aria-hidden="true"></i>
+                    Manage Orders</a>
+                <!-- <a class="list-group-item {% if '/authentication/update-profile/' == request.path %} active {% endif %}"
+                    href="#"><i class="fa fa-home" aria-hidden="true"></i> Manage Shop Details</a>
+                <a class="list-group-item {% if '/authentication/update-password/' == request.path %} active {% endif %}"
+                    href="#"><i class="nav-icon fas fa-cog"></i> Change password</a> -->
+                <a class="list-group-item" href="{% url 'logout' %}"><i class='nav-icon fa fa-power-off'></i> Sign
+                    out</a>
+            </ul>
+        </aside>

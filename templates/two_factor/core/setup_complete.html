@@ -1,0 +1,24 @@
+{% extends "two_factor/_base_focus.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 450px; margin-top:15px;">
+  <h4>{% block title %}{% trans "Congratulations" %}{% endblock %}</h4>
+
+  <p>{% blocktrans trimmed %} You've successfully verified that is your account.{% endblocktrans %}</p>
+
+  {% if not phone_methods %}
+    <p><a href="{% url 'customer_dashboard' %}"
+        class="btn btn-block btn-primary">{% trans "Back to Dashboard" %}</a></p>
+  {% else %}
+    <p>{% blocktrans trimmed %}However, it might happen that you don't have access to
+      your primary token device. To enable account recovery, add a phone
+      number.{% endblocktrans %}</p>
+
+    <a href="{% url 'customer_dashboard' %}"
+        class="float-right btn btn-link">{% trans "Back to Dashboard" %}</a>
+    <p><a href="{% url 'two_factor:phone_create' %}"
+        class="btn btn-success">{% trans "Add Phone Number" %}</a></p>
+  {% endif %}
+</div>
+{% endblock %}

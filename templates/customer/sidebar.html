@@ -1,0 +1,16 @@
+{% load static %}
+
+<link href="{% static 'css/adminlte.min.css' %}" rel="stylesheet" type="text/css" />
+			
+  <div class="container">
+    <div class="row">
+		<aside class="col-md-3">
+			<ul class="list-group">
+				<a class="list-group-item {% if '/authentication/dashboard/' == request.path %} active {% endif %}" href="{% url 'customer_dashboard' %}"><i class="fa fa-credit-card" aria-hidden="true"></i> Dashboard</a>
+				<a class="list-group-item {% if '/authentication/orders/' == request.path %} active {% endif %}" href="{% url 'customer_orders' %}"><i class="nav-icon fas fa-shopping-cart" aria-hidden="true"></i> My orders</a>
+				<a class="list-group-item {% if '/authentication/update-profile/' == request.path %} active {% endif %}" href="{% url 'update_profile' %}"><i class="fa fa-user" aria-hidden="true"></i> Update profile</a>
+				<a class="list-group-item {% if '/authentication/update-password/' == request.path %} active {% endif %}" href="{% url 'update_password' %}"><i class="nav-icon fas fa-cog"></i> Change password</a>
+				<a class="list-group-item" href="{% url 'logout' %}"><i class='nav-icon fa fa-power-off'></i> Sign out</a>
+			</ul>
+		</aside>
+

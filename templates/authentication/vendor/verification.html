@@ -1,0 +1,20 @@
+{% autoescape off %}
+
+
+Dear {{user.last_name}},
+
+Thank you for signing up for our online store as a vendor. We are happy you are here.
+
+Now, click on the link below to activate your account. 
+
+Verify your email address so we know it’s really you, and so we can send you important information about your shopping activities.
+
+http://{{domain}}{% url 'activate_account' uidb64=uid token=token %}
+
+Cheers,
+e-Kariakoo
+
+{% endautoescape %}
+
+
+

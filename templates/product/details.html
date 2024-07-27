@@ -1,0 +1,250 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<section class="section-content padding-y bg">
+  <div class="container">
+    <div class="card">
+      <div class="row no-gutters">
+        <aside class="col-md-6">
+          <article class="gallery-wrap">
+            <div class="img-big-wrap mainImage"> 
+              <center>
+                <img src="{{ product.product_image.url }}">
+                </center> 
+            </div>
+          </article>
+          <ul class="thumb">
+            <li> 
+              <a href="{{ product.product_image.url }}" target="mainImage"><img src="{{ product.product_image.url }}" class="rounded" alt="Product Image"></a>
+              {% for i in product_gallery %}
+                <a href="{{ i.image.url }}" target="mainImage"><img src="{{ i.image.url }}" class="rounded" alt="Product Image"></a>
+              {% endfor %}
+            </li>
+          </ul>
+        </aside>
+        <main class="col-md-6 border-left">
+          <form action="{% url 'add_to_cart' product.id %}" method="POST">
+            {% csrf_token %}
+            <article class="content-body">
+              <h2 class="title">{{ product.product_name }}</h2><hr>
+              <div class="mb-3">
+                <var class="price h4"> {{ product.selling_price }}</var>
+                <div class="rating-star">
+									<span>
+										<i class="fa fa-star{% if product.average__review < 0.5 %}-o{% elif product.average__review >= 0.5 and product.average__review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+										<i class="fa fa-star{% if product.average__review < 1.5 %}-o{% elif product.average__review >= 1.5 and product.average__review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+										<i class="fa fa-star{% if product.average__review < 2.5 %}-o{% elif product.average__review >= 2.5 and product.average__review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+										<i class="fa fa-star{% if product.average__review < 3.5 %}-o{% elif product.average__review >= 3.5 and product.average__review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+										<i class="fa fa-star{% if product.average__review < 4.5 %}-o{% elif product.average__review >= 4.5 and product.average__review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+									</span>
+									
+									{% if product.count_rating <= 0 %}
+										<span>{{ product.average_review }} out of 5</span> <br>
+									  <span>{{ product.count_rating }} global ratings</span><br> 
+										{% else %}
+										  <span>{{ product.average_review }} out of 5</span><br>
+										  <span>{{ product.count_rating }} global ratings</span><br>
+									  {% endif %} 
+                    {% if product.product_stock > 0 %}
+                      <span class="label-rating text-success">In stock</span>
+                    {% endif %}
+								</div>
+              </div> 
+              <p>{{ product.product_description }}</p>
+              <hr>
+              {% if product.product_stock <= 0 %}
+              <h5 class="text-danger">Out of stock</h5>
+              {% else %}
+              <div class="row">
+                <div class="col-md-5">
+                  <h6>Colour</h6>
+                  <select name="color" class="form-control rounded selector" required>
+                    <option value="" disabled selected>
+                      Please, select colour
+                    </option>
+                    {% for i in product.variation_set.colors %}
+                    <option value="{{ i.variation_value | lower }}">
+                      {{ i.variation_value | capfirst }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-md-5">
+                  <h6>Size</h6>
+                  <select name="size" class="form-control rounded selector" required>
+                    <option value="" disabled selected>
+                      Please, select size
+                    </option>
+                    {% for i in product.variation_set.sizes %}
+                    <option value="{{ i.variation_value | lower }}">
+                      {{ i.variation_value | capfirst }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div><br>
+              <button type="submit" class="btn btn-lg btn-primary">
+                <span class="text">Add to Cart</span>
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+              {% endif %}
+            </article>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    {% include 'partials/notification.html' %}
+  <section class="padding-y border-top">
+      <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="card">
+            <header class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a href="#" data-bs-target="#" data-bs-toggle="tab" class="nav-link active">Product features</a>
+                </li>
+              </ul>
+            </header>
+            <div class="tab-content">
+              <article id="tab_specs" class="tab-pane show card-body active">
+                <ul class="list-check cols-two">
+                  <li>Occasion: Easy to Dress Up or Down. The dresses are great for all Occasion. Perfect for casual wear, indoor, outdoor, work, date, party and wherever you want to go.</li>
+                <li>Note: A little bit see through, it is recommended to use Nude color or Light color underwear. The dress Can Wear With Boots / Scarf / Beach Hat / Chain / Jeans Jacket / Leggings. Also will Look Sexy if Pair It with a Belt for a Night Out.</li>
+                  <li>Attention:The floral print is random,we couldn't guarantee the position of floral print on each dress,but they are definitely made of same pattern fabric. Material: 95% Rayon,5% Spandex,Soft fabric, lightweight and comfortable to wear.</li>
+                  <li>Size: X-Small/US(2-4), Small/US(4-6), Medium/US(8-10), Large/US(12-14), X-Large/US(16-18), 2X-Large/US(20).Please pay attention to the size before placing an order, thanks!</li>
+                </ul>
+                <table class="table border table-hover">
+                  <tbody>
+                    <tr>
+                      <th>Product brand: </th><td> {{ product.product_brand }} </td>
+                    </tr>
+                    <tr>
+                      <th>Product type: </th><td> {{ product.product_category }} </td>
+                    </tr>
+                    <tr>
+                  </tbody>
+                </table>
+              </article> 
+            </div>
+          </div>  
+        </div> 
+        <aside class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Related products</h5>
+                {% for product in related_products %}
+                  <article class="itemside mb-3">
+                    <a href="{{ product.get_url }}" class="aside">
+                      <img src="{{ product.product_image.url }}" width="96" height="96" class="img-md img-thumbnail"/>
+                    </a>
+                    <div class="info">
+                      <a href="{{ product.get_url }}" class="title mb-1">{{ product.product_name }}</a>
+                      <strong class="price"> {{ product.selling_price }}</strong>
+                      <div class="rating-star">
+                        <span>
+                          <i class="fa fa-star{% if product.average__review < 0.5 %}-o{% elif product.average__review >= 0.5 and product.average__review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                          <i class="fa fa-star{% if product.average__review < 1.5 %}-o{% elif product.average__review >= 1.5 and product.average__review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                          <i class="fa fa-star{% if product.average__review < 2.5 %}-o{% elif product.average__review >= 2.5 and product.average__review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                          <i class="fa fa-star{% if product.average__review < 3.5 %}-o{% elif product.average__review >= 3.5 and product.average__review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                          <i class="fa fa-star{% if product.average__review < 4.5 %}-o{% elif product.average__review >= 4.5 and product.average__review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                        </span>
+                        
+                        {% if product.count_rating <= 0 %}
+                          <span>{{ product.average_review }} out of 5</span>
+                          <br><span>{{ product.count_rating }} global ratings</span><br>
+                          {% else %}
+                            <span>{{ product.average_review }} out of 5</span>
+                          <br><span>{{ product.count_rating }} global ratings</span><br>
+                          {% endif %}
+                      </div>
+                      <a href="{{ product.get_url }}" class="btn btn-block btn-primary">View details </a>
+                    </div>
+                  </article>
+                {% endfor %}
+            </div> 
+          </div>
+        </aside>
+      </div>
+    <div class="row">
+        <div class="col-md-12">
+          {% if user.is_authenticated %}
+            {% if orderproduct %}
+              <form action="{% url 'rate_product' product.id %}" method="POST">
+                {% csrf_token %} 
+                  <h4>How do you rate this product?<span class="text-danger"> *</h4>
+                  <br>
+                  <div class="rate">
+                    <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
+                    <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
+                    <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
+                    <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
+                    <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
+                    <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
+                    <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
+                    <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
+                    <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
+                    <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
+                  </div> <br>
+                  
+                  <label>Review title:<span class="text-danger"> *</label>
+                  <input type="text" class="form-control" name="subject">
+                  <br>
+                  <label>Write your review here:<span class="text-danger"> *</label>
+                  <textarea name="review" rows="5" class="form-control"></textarea>
+                  <br>
+                    <input type="submit" value="Submit your review" class="btn btn-primary">
+                    <hr>
+                    
+                  {% endif %}
+                {% endif %}
+              </form>
+          <header class="section-heading">
+            <h3>Customer reviews </h3>         
+            <div class="rating-star">
+              <span>
+                  <i class="fa fa-star{% if product.average_review < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if product.average_review < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if product.average_review < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if product.average_review < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if product.average_review < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  
+                  {% if product.count_rating <= 0 %}
+                    <span>No customer reviews</span>
+                  {% else %}
+                    <span>{{ product.average_review }} out of 5</span>
+                    <br><span>{{ product.count_rating }} global ratings</span><br>
+                  {% endif %}
+              </span>
+            </div>
+          </header>
+          {% for review in reviews %}
+            <article class="box mb-3">
+              <div class="icontext w-100">
+                <div class="text">
+                  <span class="date text-muted float-md-right">{{ review.created_at }} </span>
+                  <h6 class="mb-1">{{ review.user.full_name | capfirst }}</i></h6><p class="text-primary"><i>verified purchase</i></p>
+                  <div class="rating-star">
+                    <span>
+                      <i class="fa fa-star{% if review.rate == 0.5 %}-half-o{% elif review.rate < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                      <i class="fa fa-star{% if review.rate == 1.5 %}-half-o{% elif review.rate < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                      <i class="fa fa-star{% if review.rate == 2.5 %}-half-o{% elif review.rate < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                      <i class="fa fa-star{% if review.rate == 3.5 %}-half-o{% elif review.rate < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                      <i class="fa fa-star{% if review.rate == 4.5 %}-half-o{% elif review.rate < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <h6>{{ review.subject }}</h6>
+                <p>
+                  {{ review.review }}
+                </p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+    </div>
+  </section>
+
+{% endblock %}

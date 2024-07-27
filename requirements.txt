@@ -1,0 +1,15 @@
+Django
+django-admin-thumbnails
+django-formtools
+django-jazzmin
+django-money
+django-otp
+django-phonenumber-field
+django-session-timeout
+django-two-factor-auth
+phonenumbers
+Pillow
+py-moneyed
+python-decouple
+requests
+validate-email 
